@@ -32,8 +32,9 @@ class Student:
         sum_ = 0
         quantity = 0
         for course in self.grades:
-            sum_ = sum(self.grades[course])
-            quantity = len(self.grades[course])
+            # print(sum(self.grades[course]))
+            sum_ += sum(self.grades[course])
+            quantity += len(self.grades[course])
         average = sum_ / quantity
         return round(average, 1)
 
@@ -86,54 +87,77 @@ class Reviewer(Mentor):
             return 'Ошибка'
 
 
-best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_student.courses_in_progress += ['Python', 'JavaScript']
-best_student.finished_courses += ['Введение в программирование']
+dmitry_student = Student('Дмитрий', 'Черепов', 'мужской')
+dmitry_student.courses_in_progress += ['Python', 'JavaScript']
+dmitry_student.finished_courses += ['Введение в программирование']
 
 anton_student = Student('Антон', 'Антонов', 'man')
 anton_student.courses_in_progress += ['Python', 'JavaScript']
 anton_student.finished_courses += ['Введение в программирование']
 
-cool_mentor = Reviewer('Some', 'Buddy')
-cool_mentor.courses_attached += ['Python']
+maxim_reviewer = Reviewer('Максим', 'Смирнов')
+maxim_reviewer.courses_attached += ['Python']
 
-best_lecturer = Lecturer('Иван', 'Иванов')
-best_lecturer.courses_attached += ['JavaScript']
+evgeny_reviewer = Reviewer('Евгений', 'Игнатов')
+evgeny_reviewer.courses_attached += ['JavaScript']
+
+ivan_lecturer = Lecturer('Иван', 'Иванов')
+ivan_lecturer.courses_attached += ['Python']
 
 igor_lecturer = Lecturer('Игорь', 'Михайлович')
-igor_lecturer.courses_attached += ['Python']
+igor_lecturer.courses_attached += ['JavaScript']
 
-cool_mentor.rate_hw(best_student, 'Python', 4)
-cool_mentor.rate_hw(best_student, 'Python', 6)
-cool_mentor.rate_hw(best_student, 'Python', 9)
+maxim_reviewer.rate_hw(dmitry_student, 'Python', 8)
+maxim_reviewer.rate_hw(dmitry_student, 'Python', 7)
+maxim_reviewer.rate_hw(anton_student, 'Python', 9)
+maxim_reviewer.rate_hw(anton_student, 'Python', 6)
 
-cool_mentor.rate_hw(anton_student, 'Python', 5)
-cool_mentor.rate_hw(anton_student, 'Python', 1)
-cool_mentor.rate_hw(anton_student, 'Python', 5)
+evgeny_reviewer.rate_hw(dmitry_student, 'JavaScript', 6)
+evgeny_reviewer.rate_hw(dmitry_student, 'JavaScript', 5)
+evgeny_reviewer.rate_hw(anton_student, 'JavaScript', 10)
+evgeny_reviewer.rate_hw(anton_student, 'JavaScript', 7)
 
-best_student.rate_lecturer(best_lecturer, 'JavaScript', 10)
-best_student.rate_lecturer(best_lecturer, 'JavaScript', 6)
-best_student.rate_lecturer(best_lecturer, 'JavaScript', 1)
+dmitry_student.rate_lecturer(ivan_lecturer, 'Python', 10)
+dmitry_student.rate_lecturer(ivan_lecturer, 'Python', 8)
+dmitry_student.rate_lecturer(igor_lecturer, 'JavaScript', 9)
+dmitry_student.rate_lecturer(igor_lecturer, 'JavaScript', 7)
 
-anton_student.rate_lecturer(best_lecturer, 'JavaScript', 9)
-anton_student.rate_lecturer(best_lecturer, 'JavaScript', 6)
-anton_student.rate_lecturer(best_lecturer, 'JavaScript', 5)
+anton_student.rate_lecturer(ivan_lecturer, 'Python', 9)
+anton_student.rate_lecturer(ivan_lecturer, 'Python', 10)
+anton_student.rate_lecturer(igor_lecturer, 'JavaScript', 6)
+anton_student.rate_lecturer(igor_lecturer, 'JavaScript', 8)
 
-best_student.rate_lecturer(igor_lecturer, 'Python', 8)
-best_student.rate_lecturer(igor_lecturer, 'Python', 4)
-best_student.rate_lecturer(igor_lecturer, 'Python', 6)
+print(anton_student, '\n')
+# print(maxim_reviewer)
+# print(igor_lecturer)
+# print(anton_student > dmitry_student)
 
-anton_student.rate_lecturer(igor_lecturer, 'Python', 1)
-anton_student.rate_lecturer(igor_lecturer, 'Python', 4)
-anton_student.rate_lecturer(igor_lecturer, 'Python', 5)
+students_list = [dmitry_student, anton_student]
+
+
+def student_scores(students, course_name):
+    sum_ = 0
+    quantity = 0
+    for student_ in students:
+        for course, grade in student_.grades.items():
+            if course == course_name:
+                sum_ += sum(grade)
+                quantity += len(grade)
+    average = sum_ / quantity
+    return round(average, 1)
+
+
+print(f'Средняя оценка за домашнее задание по всем студентам в рамках курса {"Python"}: '
+      f'{student_scores(students_list, "Python")} баллов')
+
 
 # print(best_student.grades)
 # print(best_student.courses_in_progress)
 # print(best_lecturer.grades)
 # print(cool_mentor)
-print(best_lecturer, 'best_lecturer')
+# print(best_lecturer, 'best_lecturer')
 # print(anton_student)
 # print(best_student)
-print(igor_lecturer, 'igor_lecturer')
-print(best_lecturer > igor_lecturer)
+# print(igor_lecturer, 'igor_lecturer')
+# print(best_lecturer > igor_lecturer)
 # print(best_student > anton_student)
