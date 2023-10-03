@@ -93,7 +93,7 @@ dmitry_student.finished_courses += ['Введение в программиро�
 
 anton_student = Student('Антон', 'Антонов', 'man')
 anton_student.courses_in_progress += ['Python', 'JavaScript']
-anton_student.finished_courses += ['Введение в программирование']
+anton_student.finished_courses += ['Основы GIT']
 
 maxim_reviewer = Reviewer('Максим', 'Смирнов')
 maxim_reviewer.courses_attached += ['Python']
@@ -104,7 +104,7 @@ evgeny_reviewer.courses_attached += ['JavaScript']
 ivan_lecturer = Lecturer('Иван', 'Иванов')
 ivan_lecturer.courses_attached += ['Python']
 
-igor_lecturer = Lecturer('Игорь', 'Михайлович')
+igor_lecturer = Lecturer('Игорь', 'Михайлюк')
 igor_lecturer.courses_attached += ['JavaScript']
 
 maxim_reviewer.rate_hw(dmitry_student, 'Python', 8)
@@ -127,10 +127,18 @@ anton_student.rate_lecturer(ivan_lecturer, 'Python', 10)
 anton_student.rate_lecturer(igor_lecturer, 'JavaScript', 6)
 anton_student.rate_lecturer(igor_lecturer, 'JavaScript', 8)
 
+print('** Студенты: **\n')
+print(dmitry_student, '\n')
 print(anton_student, '\n')
-# print(maxim_reviewer)
-# print(igor_lecturer)
-# print(anton_student > dmitry_student)
+print('** Эксперты, проверяющие домашние задания: **\n')
+print(maxim_reviewer, '\n')
+print(evgeny_reviewer, '\n')
+print('** Лекторы: **\n')
+print(ivan_lecturer, '\n')
+print(igor_lecturer, '\n')
+print('** Полевые испытания: **\n')
+print('средняя оценка студента Антонова > средняя оценка студента Черепанова: ', anton_student > dmitry_student)
+print('средняя оценка лектора Иванова < средняя оценка лектора Михайлюк: ', ivan_lecturer < igor_lecturer)
 
 students_list = [dmitry_student, anton_student]
 
@@ -150,14 +158,26 @@ def student_scores(students, course_name):
 print(f'Средняя оценка за домашнее задание по всем студентам в рамках курса {"Python"}: '
       f'{student_scores(students_list, "Python")} баллов')
 
+print(f'Средняя оценка за домашнее задание по всем студентам в рамках курса {"JavaScript"}: '
+      f'{student_scores(students_list, "JavaScript")} баллов')
 
-# print(best_student.grades)
-# print(best_student.courses_in_progress)
-# print(best_lecturer.grades)
-# print(cool_mentor)
-# print(best_lecturer, 'best_lecturer')
-# print(anton_student)
-# print(best_student)
-# print(igor_lecturer, 'igor_lecturer')
-# print(best_lecturer > igor_lecturer)
-# print(best_student > anton_student)
+lecturer_list = [ivan_lecturer, igor_lecturer]
+
+
+def lecturer_scores(lecturer, course_name):
+    sum_ = 0
+    quantity = 0
+    for lecturer_ in lecturer:
+        for course, grade in lecturer_.grades.items():
+            if course == course_name:
+                sum_ += sum(grade)
+                quantity += len(grade)
+    average = sum_ / quantity
+    return round(average, 1)
+
+
+print(f'Средняя оценка за лекции всех лекторов в рамках курса {"Python"}: '
+      f'{lecturer_scores(lecturer_list, "Python")} баллов')
+
+print(f'Средняя оценка за лекции всех лекторов в рамках курса {"JavaScript"}: '
+      f'{lecturer_scores(lecturer_list, "JavaScript")} баллов')
