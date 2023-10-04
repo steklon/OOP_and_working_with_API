@@ -1,5 +1,6 @@
 from pprint import pprint
 
+
 def new_cook_book():
     with open('recipes.txt', encoding='UTF-8') as file:
         cook_book = {}
@@ -13,17 +14,27 @@ def new_cook_book():
     return cook_book
 
 
+print('** cook_book: **')
+pprint(new_cook_book())
+print()
+
+
 def get_shop_list_by_dishes(dishes, person_count):
     result = {}
-    for foods, products in new_cook_book().items():
+    for foods, lists_of_all_products in new_cook_book().items():
         for dish in dishes:
             if dish == foods:
-                for i in products:
-                    meal = dict()
-                    meal["measure"] = i.get("measure")
-                    meal["quantity"] = i.get("quantity") * person_count
-                    result[i.get("ingredient_name")] = meal
+                for ingredient in lists_of_all_products:
+                    portion = dict()
+                    portion["measure"] = ingredient.get("measure")
+                    if ingredient.get("ingredient_name") in result.keys():
+                        units = result.get(ingredient.get("ingredient_name"))
+                        portion["quantity"] = units.get('quantity') + ingredient.get("quantity") * person_count
+                    else:
+                        portion["quantity"] = ingredient.get("quantity") * person_count
+                    result[ingredient.get("ingredient_name")] = portion
     return result
 
 
-pprint(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2))
+print('** Необходимое количество ингредиентов: **')
+pprint(get_shop_list_by_dishes(['Фахитос', 'Омлет'], 4))
